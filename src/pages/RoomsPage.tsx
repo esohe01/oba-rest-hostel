@@ -21,18 +21,19 @@ export function RoomsPage() {
       <section className="section-space">
         <ContentContainer>
           <SectionHeading eyebrow="Room categories" title="Choose a category to ask about" description="Specific room features, rates and availability are confirmed by reception." />
-          <div className="room-grid">
+          <ul className="room-type-list">
             {roomTypes.map((room, index) => (
-              <article className="room-card" key={room.name}>
-                <span className="room-card__number">0{index + 1}</span>
-                <div className="room-card__mark" aria-hidden="true"><span /></div>
-                <h3>{room.name}</h3>
-                {room.detail && <p className="room-card__variants">{room.detail}</p>}
-                <p>Ask reception for the room details and rate for your dates.</p>
+              <li className="room-type-list__item" key={room.name}>
+                <span className="room-type-list__number">0{index + 1}</span>
+                <div className="room-type-list__copy">
+                  <h3>{room.name}</h3>
+                  {room.detail && <p className="room-type-list__variants">{room.detail}</p>}
+                  <p>Ask reception for the room details and rate for your dates.</p>
+                </div>
                 <EnquiryLink appearance="quiet">Ask reception</EnquiryLink>
-              </article>
+              </li>
             ))}
-          </div>
+          </ul>
         </ContentContainer>
       </section>
       <section className="rate-band">
