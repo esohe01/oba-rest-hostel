@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router'
+import { EnquiryLink } from './EnquiryLink'
 
 const navigation = [
   { label: 'Home', to: '/' },
@@ -27,6 +28,7 @@ export function SiteHeader() {
             </NavLink>
           ))}
         </nav>
+        <EnquiryLink className="site-header__cta">Request a booking</EnquiryLink>
       </div>
     </header>
   )
