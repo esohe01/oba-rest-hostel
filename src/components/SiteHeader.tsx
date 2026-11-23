@@ -2,9 +2,9 @@ import { NavLink } from 'react-router'
 
 const navigation = [
   { label: 'Home', to: '/' },
-  { label: 'Rooms & Suites', to: '/rooms-suites' },
-  { label: 'Amenities & Guest Info', to: '/amenities-guest-information' },
-  { label: 'Location & Contact', to: '/location-contact' },
+  { label: 'Rooms & Suites', to: '/rooms' },
+  { label: 'Amenities & Guest Info', to: '/amenities' },
+  { label: 'Location & Contact', to: '/contact' },
 ]
 
 export function SiteHeader() {
