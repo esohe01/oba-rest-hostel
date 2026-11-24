@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
+import crownLogo from '../assets/oba-crown-logo.png'
 import { EnquiryLink } from './EnquiryLink'
 
 const navigation = [
@@ -18,7 +19,7 @@ export function SiteHeader() {
     <header className={`site-header${isHome ? ' site-header--home' : ''}`}>
       <div className="site-header__inner">
         <NavLink className="brand" to="/" aria-label="Oba’s Rest Hotel home">
-          <span className="brand__mark" aria-hidden="true">O</span>
+          <img className="brand__crown" src={crownLogo} alt="" aria-hidden="true" />
           <span className="brand__name">Oba’s Rest Hotel</span>
         </NavLink>
         <button

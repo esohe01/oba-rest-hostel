@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
-import { ChatWidget } from '../components/ChatWidget'
+import { BotpressWebchat } from '../components/BotpressWebchat'
 
 export function SiteLayout() {
   const location = useLocation()
@@ -37,7 +37,7 @@ export function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
-      <ChatWidget />
+      <BotpressWebchat />
     </div>
   )
 }
