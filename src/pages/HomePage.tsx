@@ -3,12 +3,17 @@ import { ContentContainer } from '../components/ContentContainer'
 import { EnquiryLink } from '../components/EnquiryLink'
 import { IllustrativeImageSlot } from '../components/IllustrativeImageSlot'
 import { SectionHeading } from '../components/SectionHeading'
+import heroImage from '../assets/images/hero.jpg'
+import juniorSuiteImage from '../assets/images/junior-suite.jpg'
+import standardSuiteImage from '../assets/images/standard-executive-suite.jpg'
+import premiumSuiteImage from '../assets/images/penthouse-presidential-suite.jpg'
+import penthouseSuiteImage from '../assets/images/penthouse-suite.jpg'
 
-const roomTypes = [
-  { name: 'Junior Suite', variant: 'junior' as const, index: '01' },
-  { name: 'Suite', detail: 'Standard / Executive Suite', variant: 'suite' as const, index: '02' },
-  { name: 'Penthouse Suite', variant: 'premium' as const, index: '03' },
-  { name: 'Presidential Suite', variant: 'premium' as const, index: '04' },
+const roomTypes: Array<{ name: string; detail?: string; variant: 'junior' | 'suite' | 'premium'; index: string; image: string; alt: string; objectPosition?: string }> = [
+  { name: 'Junior Suite', variant: 'junior' as const, index: '01', image: juniorSuiteImage, alt: 'Illustrative hotel room with a bed, upholstered headboard, bedside lamps and wood trim.' },
+  { name: 'Suite', detail: 'Standard / Executive Suite', variant: 'suite' as const, index: '02', image: standardSuiteImage, alt: 'Illustrative suite with a bed, lounge chair, side table, curtains and warm bedside lighting.' },
+  { name: 'Penthouse Suite', variant: 'premium' as const, index: '03', image: penthouseSuiteImage, alt: 'Illustrative penthouse suite bedroom with city-facing windows, warm lighting and neutral finishes.' },
+  { name: 'Presidential Suite', variant: 'premium' as const, index: '04', image: premiumSuiteImage, alt: 'Illustrative premium suite with a bed, sitting area, textured walls and soft ceiling lighting.', objectPosition: '24% center' },
 ]
 
 export function HomePage() {
@@ -30,12 +35,9 @@ export function HomePage() {
             <p className="booking-note">Reception checks availability and confirms every booking.</p>
           </div>
           <div className="home-hero__visual">
-            <span className="home-hero__visual-index" aria-hidden="true">01 <span>/</span> WELCOME</span>
-            <IllustrativeImageSlot title="Hotel entrance or reception" variant="lobby" />
-            <span className="home-hero__visual-note">Representative image · not an actual hotel photograph</span>
+            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Hotel reception illustration with warm wood walls, stone counters, pendant lights and white columns." priority />
           </div>
         </ContentContainer>
-        <div className="home-hero__rule" aria-hidden="true" />
       </section>
 
       <section className="home-introduction section-space" aria-labelledby="home-introduction-title">
@@ -66,7 +68,7 @@ export function HomePage() {
           <div className="home-room-grid">
             {roomTypes.map((room) => (
               <Link className={`home-room-card home-room-card--${room.variant}`} key={room.name} to="/rooms" aria-label={`Explore ${room.name}${room.detail ? `, ${room.detail}` : ''}`}>
-                <IllustrativeImageSlot title={room.name} variant={room.variant} compact />
+                <IllustrativeImageSlot title={room.name} variant={room.variant} src={room.image} alt={room.alt} objectPosition={room.objectPosition} compact />
                 <div className="home-room-card__caption">
                   <span className="home-room-card__index">{room.index}</span>
                   <div><h3>{room.name}</h3>{room.detail && <p>{room.detail}</p>}</div>
