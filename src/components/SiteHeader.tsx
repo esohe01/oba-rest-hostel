@@ -5,8 +5,8 @@ import { EnquiryLink } from './EnquiryLink'
 const navigation = [
   { label: 'Home', to: '/' },
   { label: 'Rooms & Suites', to: '/rooms' },
-  { label: 'Amenities & Guest Info', to: '/amenities' },
-  { label: 'Location & Contact', to: '/contact' },
+  { label: 'Amenities', to: '/amenities' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 export function SiteHeader() {
@@ -41,9 +41,9 @@ export function SiteHeader() {
               {label}
             </NavLink>
           ))}
-          <EnquiryLink className="primary-nav__cta" onClick={() => setMenuOpen(false)}>Request a booking</EnquiryLink>
+          <EnquiryLink className="primary-nav__cta" onClick={() => setMenuOpen(false)}>Enquire about rooms</EnquiryLink>
         </nav>
-        <EnquiryLink className="site-header__cta">Request a booking</EnquiryLink>
+        <EnquiryLink className="site-header__cta">Enquire about rooms</EnquiryLink>
       </div>
     </header>
   )
