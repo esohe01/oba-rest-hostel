@@ -6,9 +6,10 @@ type IllustrativeImageSlotProps = {
   alt?: string
   objectPosition?: string
   priority?: boolean
+  showCaption?: boolean
 }
 
-export function IllustrativeImageSlot({ title, variant, compact = false, src, alt = '', objectPosition = 'center', priority = false }: IllustrativeImageSlotProps) {
+export function IllustrativeImageSlot({ title, variant, compact = false, src, alt = '', objectPosition = 'center', priority = false, showCaption = true }: IllustrativeImageSlotProps) {
   return (
     <figure className={`illustration-slot illustration-slot--${variant}${compact ? ' illustration-slot--compact' : ''}`}>
       {src ? (
@@ -28,11 +29,13 @@ export function IllustrativeImageSlot({ title, variant, compact = false, src, al
           <span className="illustration-slot__line" />
         </div>
       )}
-      <figcaption className="illustration-slot__caption">
-        <span className="illustration-slot__status">{src ? 'Illustrative AI-generated concept' : 'Illustrative image pending generation'}</span>
-        <strong>{title}</strong>
-        <span>Not a photograph of Oba’s Rest Hotel</span>
-      </figcaption>
+      {showCaption && (
+        <figcaption className="illustration-slot__caption">
+          <span className="illustration-slot__status">{src ? 'Illustrative AI-generated concept' : 'Illustrative image pending generation'}</span>
+          <strong>{title}</strong>
+          <span>Not a photograph of Oba’s Rest Hotel</span>
+        </figcaption>
+      )}
     </figure>
   )
 }

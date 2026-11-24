@@ -25,7 +25,7 @@ export function HomePage() {
             <div className="home-hero__stars" aria-hidden="true">★★★★★</div>
             <h1 id="home-title">OBA'S REST HOTEL</h1>
             <p className="home-hero__description">
-              A calm, welcoming place to stay in Benin City. Explore our rooms, then speak with reception about your visit.
+              A calm, welcoming stay in Benin City.
             </p>
             <div className="home-hero__actions">
               <Link className="home-hero__explore" to="#home-rooms">EXPLORE <span aria-hidden="true">→</span></Link>
@@ -33,7 +33,7 @@ export function HomePage() {
             <p className="booking-note">Reception checks availability and confirms every booking.</p>
           </div>
           <div className="home-hero__visual">
-            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Illustrative hotel reception with warm wood walls, a stone counter and pendant lights." priority />
+            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Illustrative concept of a hotel reception with warm wood walls, a stone counter and pendant lights; not an actual hotel photograph." priority showCaption={false} />
           </div>
         </ContentContainer>
       </section>
