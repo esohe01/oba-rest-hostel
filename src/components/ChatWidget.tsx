@@ -41,8 +41,15 @@ export function ChatWidget() {
 
   return (
     <div className="chat-widget">
-      {isOpen && (
-        <section id="guest-chat-panel" className="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title">
+      <section
+        id="guest-chat-panel"
+        className={`chat-panel${isOpen ? ' is-open' : ''}`}
+        role="dialog"
+        aria-modal="false"
+        aria-labelledby="chat-title"
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+      >
           <header className="chat-panel__header">
             <div>
               <p className="chat-panel__eyebrow">Oba’s Rest Hotel</p>
@@ -78,8 +85,7 @@ export function ChatWidget() {
             <button className="chat-panel__send" type="submit" disabled={!draft.trim()}>Send</button>
           </form>
           <p className="chat-panel__footnote">Your message stays in this page and is not sent.</p>
-        </section>
-      )}
+      </section>
 
       <button
         ref={toggleRef}

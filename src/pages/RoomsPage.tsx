@@ -3,12 +3,16 @@ import { EnquiryLink } from '../components/EnquiryLink'
 import { IllustrativeImageSlot } from '../components/IllustrativeImageSlot'
 import { PageIntro } from '../components/PageIntro'
 import { SectionHeading } from '../components/SectionHeading'
+import juniorSuiteImage from '../assets/images/junior-suite.jpg'
+import standardSuiteImage from '../assets/images/standard-executive-suite.jpg'
+import premiumSuiteImage from '../assets/images/penthouse-presidential-suite.jpg'
+import penthouseSuiteImage from '../assets/images/penthouse-suite.jpg'
 
-const roomTypes = [
-  { name: 'Junior Suite', variant: 'junior' as const },
-  { name: 'Suite', detail: 'Standard / Executive Suite', variant: 'suite' as const },
-  { name: 'Penthouse Suite', variant: 'premium' as const },
-  { name: 'Presidential Suite', variant: 'premium' as const },
+const roomTypes: Array<{ name: string; detail?: string; variant: 'junior' | 'suite' | 'premium'; image: string; alt: string; objectPosition?: string; presentation?: string }> = [
+  { name: 'Junior Suite', variant: 'junior', image: juniorSuiteImage, alt: 'Illustrative hotel room with a bed, upholstered headboard, bedside lamps and wood trim.' },
+  { name: 'Suite', detail: 'Standard / Executive Suite', variant: 'suite', image: standardSuiteImage, alt: 'Illustrative suite with a bed, lounge chair, side table, curtains and warm bedside lighting.' },
+  { name: 'Penthouse Suite', variant: 'premium', image: penthouseSuiteImage, alt: 'Illustrative penthouse suite bedroom with city-facing windows, warm lighting and neutral finishes.', presentation: 'room-card--penthouse' },
+  { name: 'Presidential Suite', variant: 'premium', image: premiumSuiteImage, alt: 'Illustrative premium suite with a bed, sitting area, textured walls and soft ceiling lighting.', objectPosition: '24% center', presentation: 'room-card--presidential' },
 ]
 
 export function RoomsPage() {
@@ -20,8 +24,8 @@ export function RoomsPage() {
           <SectionHeading eyebrow="Room categories" title="Choose a category to ask about" description="Room imagery on this page is illustrative. Specific room features, rates and availability are confirmed by reception." />
           <div className="room-card-grid">
             {roomTypes.map((room, index) => (
-              <article className="room-card" key={room.name}>
-                <IllustrativeImageSlot title={room.name} variant={room.variant} compact />
+              <article className={`room-card ${room.presentation ?? ''}`} key={room.name}>
+                <IllustrativeImageSlot title={room.name} variant={room.variant} src={room.image} alt={room.alt} objectPosition={room.objectPosition} compact />
                 <div className="room-card__body">
                   <span className="room-card__number">0{index + 1}</span>
                   <h3>{room.name}</h3>

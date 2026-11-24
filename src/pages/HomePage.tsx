@@ -3,84 +3,106 @@ import { ContentContainer } from '../components/ContentContainer'
 import { EnquiryLink } from '../components/EnquiryLink'
 import { IllustrativeImageSlot } from '../components/IllustrativeImageSlot'
 import { SectionHeading } from '../components/SectionHeading'
+import heroImage from '../assets/images/hero.jpg'
+import juniorSuiteImage from '../assets/images/junior-suite.jpg'
+import standardSuiteImage from '../assets/images/standard-executive-suite.jpg'
+import premiumSuiteImage from '../assets/images/penthouse-presidential-suite.jpg'
+import penthouseSuiteImage from '../assets/images/penthouse-suite.jpg'
 
-const roomTypes = [
-  'Junior Suite',
-  'Suite · Standard / Executive',
-  'Penthouse Suite',
-  'Presidential Suite',
+const roomTypes: Array<{ name: string; detail?: string; variant: 'junior' | 'suite' | 'premium'; index: string; image: string; alt: string; objectPosition?: string }> = [
+  { name: 'Junior Suite', variant: 'junior' as const, index: '01', image: juniorSuiteImage, alt: 'Illustrative hotel room with a bed, upholstered headboard, bedside lamps and wood trim.' },
+  { name: 'Suite', detail: 'Standard / Executive Suite', variant: 'suite' as const, index: '02', image: standardSuiteImage, alt: 'Illustrative suite with a bed, lounge chair, side table, curtains and warm bedside lighting.' },
+  { name: 'Penthouse Suite', variant: 'premium' as const, index: '03', image: penthouseSuiteImage, alt: 'Illustrative penthouse suite bedroom with city-facing windows, warm lighting and neutral finishes.' },
+  { name: 'Presidential Suite', variant: 'premium' as const, index: '04', image: premiumSuiteImage, alt: 'Illustrative premium suite with a bed, sitting area, textured walls and soft ceiling lighting.', objectPosition: '24% center' },
 ]
 
 export function HomePage() {
   return (
     <>
-      <section className="home-hero">
+      <section className="home-hero" aria-labelledby="home-title">
         <ContentContainer className="home-hero__grid">
           <div className="home-hero__copy">
-            <p className="eyebrow">Airport Road · Benin City</p>
-            <h1>A welcoming place to stay.</h1>
+            <div className="home-hero__stars" aria-hidden="true">★★★★★</div>
+            <h1 id="home-title">OBA'S REST HOTEL</h1>
             <p className="home-hero__description">
-              Welcome to Oba’s Rest Hotel. Explore room categories, confirmed facilities and guest information, then contact reception with your questions.
+              A calm, welcoming stay in Benin City.
             </p>
             <div className="home-hero__actions">
-              <EnquiryLink>Request a booking</EnquiryLink>
-              <Link className="text-link" to="/rooms">Explore rooms <span aria-hidden="true">→</span></Link>
+              <Link className="home-hero__explore" to="#home-rooms">EXPLORE <span aria-hidden="true">→</span></Link>
             </div>
-            <p className="booking-note">A request is not a confirmed booking. Reception checks availability and confirms every booking.</p>
+            <p className="booking-note">Reception checks availability and confirms every booking.</p>
           </div>
-          <IllustrativeImageSlot title="Hotel entrance or reception" variant="lobby" />
+          <div className="home-hero__visual">
+            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Illustrative concept of a hotel reception with warm wood walls, a stone counter and pendant lights; not an actual hotel photograph." priority showCaption={false} />
+          </div>
         </ContentContainer>
       </section>
 
-      <section className="home-rooms section-space">
-        <ContentContainer>
-          <div className="section-heading-row">
-            <SectionHeading eyebrow="Rooms & Suites" title="Find a room category" description="Ask reception for room details, rates and availability for your dates." />
-            <Link className="text-link" to="/rooms">View all room categories <span aria-hidden="true">→</span></Link>
+      <section className="home-introduction section-space" aria-labelledby="home-introduction-title">
+        <ContentContainer className="home-introduction__grid">
+          <div className="home-introduction__marker">
+            <span>01</span>
+            <span>WELCOME</span>
           </div>
-          <div className="home-room-list">
-            {roomTypes.map((room, index) => (
-              <Link className="home-room-link" key={room} to="/rooms">
-                <span className="home-room-link__number">0{index + 1}</span>
-                <span>{room}</span>
-                <span aria-hidden="true">↗</span>
+          <div className="home-introduction__copy">
+            <p className="eyebrow">A place to begin</p>
+            <h2 id="home-introduction-title">Welcome to Oba’s Rest Hotel.</h2>
+            <p>Find the room category that suits your plans, learn about confirmed facilities, and contact reception for the details of your stay.</p>
+            <Link className="text-link" to="/contact">Find us on Airport Road <span aria-hidden="true">↗</span></Link>
+          </div>
+          <aside className="home-introduction__aside">
+            <span className="home-introduction__aside-label">A helpful note</span>
+            <p>Room details, rates and availability are confirmed by reception for your dates.</p>
+          </aside>
+        </ContentContainer>
+      </section>
+
+      <section id="home-rooms" className="home-rooms section-space" aria-labelledby="home-rooms-title">
+        <ContentContainer>
+          <div className="home-rooms__heading">
+            <SectionHeading eyebrow="Rooms & Suites" title="A room for your plans." description="Explore the four room categories, then contact reception for the details that apply to your stay." />
+            <Link className="text-link" to="/rooms">View all rooms <span aria-hidden="true">↗</span></Link>
+          </div>
+          <div className="home-room-grid">
+            {roomTypes.map((room) => (
+              <Link className={`home-room-card home-room-card--${room.variant}`} key={room.name} to="/rooms" aria-label={`Explore ${room.name}${room.detail ? `, ${room.detail}` : ''}`}>
+                <IllustrativeImageSlot title={room.name} variant={room.variant} src={room.image} alt={room.alt} objectPosition={room.objectPosition} compact />
+                <div className="home-room-card__caption">
+                  <span className="home-room-card__index">{room.index}</span>
+                  <div><h3>{room.name}</h3>{room.detail && <p>{room.detail}</p>}</div>
+                  <span className="home-room-card__arrow" aria-hidden="true">↗</span>
+                </div>
               </Link>
             ))}
           </div>
         </ContentContainer>
       </section>
 
-      <section className="home-facilities">
+      <section className="home-facilities" aria-labelledby="home-facilities-title">
         <ContentContainer className="home-facilities__inner">
           <div className="home-facilities__intro">
-            <p className="eyebrow">Confirmed facilities</p>
-            <h2>Practical details for your stay.</h2>
-            <Link className="text-link text-link--light" to="/amenities">Explore amenities <span aria-hidden="true">→</span></Link>
+            <p className="eyebrow">Confirmed at the hotel</p>
+            <h2 id="home-facilities-title">The essentials, clearly.</h2>
+            <Link className="text-link text-link--light" to="/amenities">Amenities & guest information <span aria-hidden="true">↗</span></Link>
           </div>
-          <div className="home-facility">
-            <span className="home-facility__index">01</span>
-            <div><h3>24-hour power</h3><p>Power is available throughout the day and night.</p></div>
-          </div>
-          <div className="home-facility">
-            <span className="home-facility__index">02</span>
-            <div><h3>Parking for every room</h3><p>Parking is available for every room.</p></div>
-          </div>
+          <div className="home-facility"><span className="home-facility__index">01</span><div><h3>24-hour power</h3><p>Power is available throughout the day and night.</p></div></div>
+          <div className="home-facility"><span className="home-facility__index">02</span><div><h3>Parking for every room</h3><p>Parking is available for every room.</p></div></div>
         </ContentContainer>
       </section>
 
       <section className="home-guest section-space">
         <ContentContainer className="home-guest__grid">
-          <SectionHeading eyebrow="Guest information" title="Know what to confirm before you arrive." description="Arrival and departure arrangements depend on your lodging arrangement. Reception can confirm the details for your stay." />
+          <SectionHeading eyebrow="Before you arrive" title="Know what to check before you arrive." description="Arrival and departure arrangements depend on your lodging arrangement. Reception can confirm the details for your visit." />
           <div className="home-guest__aside">
-            <p>Questions about check-in or house rules? Please contact reception to confirm.</p>
-            <Link className="text-link" to="/amenities">Guest information & FAQs <span aria-hidden="true">→</span></Link>
+            <p>Questions about arrival, departure or house rules? The reception team can help clarify them.</p>
+            <Link className="text-link" to="/amenities">Read guest information <span aria-hidden="true">↗</span></Link>
           </div>
         </ContentContainer>
       </section>
 
-      <section className="booking-strip">
+      <section className="booking-strip" aria-labelledby="home-contact-title">
         <ContentContainer className="booking-strip__inner">
-          <div><p className="eyebrow">Contact reception</p><h2>Planning a stay?</h2><p>Ask about your dates and room options. Reception confirms every booking.</p></div>
+          <div><p className="eyebrow">Your stay starts with a conversation</p><h2 id="home-contact-title">Let’s talk about your visit.</h2><p>Send an enquiry to reception. Every booking is checked and confirmed by the team.</p></div>
           <EnquiryLink>Make an enquiry</EnquiryLink>
         </ContentContainer>
       </section>
