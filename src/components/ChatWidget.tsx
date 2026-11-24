@@ -53,7 +53,7 @@ export function ChatWidget() {
           <header className="chat-panel__header">
             <div>
               <p className="chat-panel__eyebrow">Oba’s Rest Hotel</p>
-              <h2 id="chat-title">Guest chat</h2>
+              <h2 id="chat-title">Hotel Assistant</h2>
             </div>
             <button className="chat-panel__close" type="button" onClick={closeWidget} aria-label="Close guest chat">×</button>
           </header>
@@ -93,11 +93,22 @@ export function ChatWidget() {
         type="button"
         aria-expanded={isOpen}
         aria-controls="guest-chat-panel"
-        aria-label={isOpen ? 'Close guest chat demo' : 'Open guest chat demo'}
+        aria-label={isOpen ? 'Close Hotel Assistant demo' : 'Open Hotel Assistant demo'}
         onClick={() => setIsOpen((open) => !open)}
       >
-        <span className="chat-toggle__icon" aria-hidden="true">{isOpen ? '×' : '•••'}</span>
-        <span className="chat-toggle__label">{isOpen ? 'Close chat' : 'Guest chat · demo'}</span>
+        <span className="chat-toggle__icon" aria-hidden="true">
+          {isOpen ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="m7 7 10 10M17 7 7 17" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5 8 8 0 0 1-3.5-.8L4 20l1.3-4.3a7.5 7.5 0 1 1 14.7-4.2Z" />
+              <path d="M8.5 11.5h7M8.5 14.5h4.5" />
+            </svg>
+          )}
+        </span>
+        <span className="chat-toggle__label">{isOpen ? 'Close chat' : 'Hotel Assistant'}</span>
       </button>
     </div>
   )
