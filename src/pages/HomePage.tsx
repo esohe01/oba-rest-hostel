@@ -22,20 +22,18 @@ export function HomePage() {
       <section className="home-hero" aria-labelledby="home-title">
         <ContentContainer className="home-hero__grid">
           <div className="home-hero__copy">
-            <p className="eyebrow">Airport Road <span aria-hidden="true">/</span> Benin City</p>
-            <p className="home-hero__overline">OBA’S REST HOTEL</p>
-            <h1 id="home-title">Make room for a <em>restful</em> stay.</h1>
+            <div className="home-hero__stars" aria-hidden="true">★★★★★</div>
+            <h1 id="home-title">OBA'S REST HOTEL</h1>
             <p className="home-hero__description">
-              Explore our room categories and confirmed guest information, then speak with reception about your plans.
+              A calm, welcoming place to stay in Benin City. Explore our rooms, then speak with reception about your visit.
             </p>
             <div className="home-hero__actions">
-              <EnquiryLink>Enquire about rooms</EnquiryLink>
-              <Link className="text-link" to="/rooms">Explore rooms <span aria-hidden="true">↗</span></Link>
+              <Link className="home-hero__explore" to="#home-rooms">EXPLORE <span aria-hidden="true">→</span></Link>
             </div>
             <p className="booking-note">Reception checks availability and confirms every booking.</p>
           </div>
           <div className="home-hero__visual">
-            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Hotel reception illustration with warm wood walls, stone counters, pendant lights and white columns." priority />
+            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Illustrative hotel reception with warm wood walls, a stone counter and pendant lights." priority />
           </div>
         </ContentContainer>
       </section>
@@ -59,7 +57,7 @@ export function HomePage() {
         </ContentContainer>
       </section>
 
-      <section className="home-rooms section-space" aria-labelledby="home-rooms-title">
+      <section id="home-rooms" className="home-rooms section-space" aria-labelledby="home-rooms-title">
         <ContentContainer>
           <div className="home-rooms__heading">
             <SectionHeading eyebrow="Rooms & Suites" title="A room for your plans." description="Explore the four room categories, then contact reception for the details that apply to your stay." />
