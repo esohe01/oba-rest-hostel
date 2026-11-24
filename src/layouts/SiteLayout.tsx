@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
+import { ChatWidget } from '../components/ChatWidget'
 
 export function SiteLayout() {
   return (
@@ -11,6 +12,7 @@ export function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
+      <ChatWidget />
     </div>
   )
 }

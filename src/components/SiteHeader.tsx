@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router'
 import { EnquiryLink } from './EnquiryLink'
 
@@ -9,6 +10,8 @@ const navigation = [
 ]
 
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <header className="site-header">
       <div className="site-header__inner">
@@ -16,17 +19,29 @@ export function SiteHeader() {
           <span className="brand__mark" aria-hidden="true">O</span>
           <span className="brand__name">Oba’s Rest Hotel</span>
         </NavLink>
-        <nav className="primary-nav" aria-label="Main navigation">
+        <button
+          className="primary-nav__toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
+          <span className="visually-hidden">{menuOpen ? 'Close' : 'Open'} navigation menu</span>
+        </button>
+        <nav id="primary-navigation" className={`primary-nav${menuOpen ? ' is-open' : ''}`} aria-label="Main navigation">
           {navigation.map(({ label, to }) => (
             <NavLink
               key={to}
               to={to}
               end={to === '/'}
               className={({ isActive }) => `primary-nav__link${isActive ? ' is-active' : ''}`}
+              onClick={() => setMenuOpen(false)}
             >
               {label}
             </NavLink>
           ))}
+          <EnquiryLink className="primary-nav__cta" onClick={() => setMenuOpen(false)}>Request a booking</EnquiryLink>
         </nav>
         <EnquiryLink className="site-header__cta">Request a booking</EnquiryLink>
       </div>

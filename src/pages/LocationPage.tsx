@@ -31,6 +31,10 @@ export function LocationPage() {
             <a className="enquiry-link enquiry-link--primary contact-card__action" href="tel:08163186622">
               Contact reception <span aria-hidden="true">↗</span>
             </a>
+            <a className="enquiry-link enquiry-link--quiet contact-card__action" href="https://wa.me/2348163186622" aria-label="Open WhatsApp chat with reception">
+              Contact reception on WhatsApp <span aria-hidden="true">↗</span>
+            </a>
+            <p className="contact-card__hint">WhatsApp will open with reception. No message is sent until you choose to send one.</p>
           </div>
         </ContentContainer>
       </section>

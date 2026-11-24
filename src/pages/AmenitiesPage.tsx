@@ -41,6 +41,18 @@ export function AmenitiesPage() {
           </div>
         </ContentContainer>
       </section>
+      <section className="faq-section section-space">
+        <ContentContainer>
+          <SectionHeading eyebrow="Common questions" title="Frequently asked questions" description="For details that depend on your visit, reception can give you the current information." />
+          <div className="faq-list">
+            <details><summary>Is power available throughout the day and night?</summary><p>Yes. The hotel has 24-hour power.</p></details>
+            <details><summary>Is parking available?</summary><p>Parking is available for every room.</p></details>
+            <details><summary>What time can I arrive or depart?</summary><p>Arrival and departure arrangements depend on your lodging arrangement. Please contact reception to confirm your details.</p></details>
+            <details><summary>What are the house rules?</summary><p>Please contact reception for the current house rules.</p></details>
+            <details><summary>Can I confirm a room for my dates here?</summary><p>Reception checks availability and confirms every booking. Please contact reception with your dates and preferred room category.</p></details>
+          </div>
+        </ContentContainer>
+      </section>
       <section className="page-disclaimer">
         <ContentContainer className="page-disclaimer__inner"><p>Only confirmed hotel information is listed here. Contact reception with questions about other facilities or policies.</p><EnquiryLink appearance="quiet">Contact reception</EnquiryLink></ContentContainer>
       </section>
