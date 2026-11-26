@@ -10,8 +10,11 @@ export function SiteLayout() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return
 
-    const targets = Array.from(document.querySelectorAll<HTMLElement>('.site-main section, .site-main .illustration-slot'))
-      .filter((target) => !target.closest('.home-hero'))
+    const isHome = location.pathname === '/'
+    const targets = isHome
+      ? Array.from(document.querySelectorAll<HTMLElement>('.homepage [data-home-reveal]'))
+      : Array.from(document.querySelectorAll<HTMLElement>('.site-main section, .site-main .illustration-slot'))
+        .filter((target) => !target.closest('.home-hero'))
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -21,8 +24,9 @@ export function SiteLayout() {
       })
     }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' })
 
-    targets.forEach((target) => {
+    targets.forEach((target, index) => {
       target.classList.add('scroll-reveal')
+      if (isHome) target.style.setProperty('--home-reveal-delay', `${(index % 4) * 75}ms`)
       observer.observe(target)
     })
 

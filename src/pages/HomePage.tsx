@@ -1,111 +1,180 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { ContentContainer } from '../components/ContentContainer'
+import { CountUpNumber } from '../components/CountUpNumber'
 import { EnquiryLink } from '../components/EnquiryLink'
 import { IllustrativeImageSlot } from '../components/IllustrativeImageSlot'
-import { SectionHeading } from '../components/SectionHeading'
 import heroImage from '../assets/images/hero.jpg'
 import juniorSuiteImage from '../assets/images/junior-suite.jpg'
 import standardSuiteImage from '../assets/images/standard-executive-suite.jpg'
 import premiumSuiteImage from '../assets/images/penthouse-presidential-suite.jpg'
 import penthouseSuiteImage from '../assets/images/penthouse-suite.jpg'
 
-const roomTypes: Array<{ name: string; detail?: string; variant: 'junior' | 'suite' | 'premium'; index: string; image: string; alt: string; objectPosition?: string }> = [
-  { name: 'Junior Suite', variant: 'junior' as const, index: '01', image: juniorSuiteImage, alt: 'Illustrative hotel room with a bed, upholstered headboard, bedside lamps and wood trim.' },
-  { name: 'Suite', detail: 'Standard / Executive Suite', variant: 'suite' as const, index: '02', image: standardSuiteImage, alt: 'Illustrative suite with a bed, lounge chair, side table, curtains and warm bedside lighting.' },
-  { name: 'Penthouse Suite', variant: 'premium' as const, index: '03', image: penthouseSuiteImage, alt: 'Illustrative penthouse suite bedroom with city-facing windows, warm lighting and neutral finishes.' },
-  { name: 'Presidential Suite', variant: 'premium' as const, index: '04', image: premiumSuiteImage, alt: 'Illustrative premium suite with a bed, sitting area, textured walls and soft ceiling lighting.', objectPosition: '24% center' },
+const roomTypes = [
+  { name: 'Junior Suite', image: juniorSuiteImage },
+  { name: 'Suite', detail: 'Standard / Executive Suite', image: standardSuiteImage },
+  { name: 'Penthouse Suite', image: penthouseSuiteImage },
+  { name: 'Presidential Suite', image: premiumSuiteImage },
 ]
 
 export function HomePage() {
+  const [activeRoom, setActiveRoom] = useState(0)
+  const roomItems = useRef<Array<HTMLLIElement | null>>([])
+
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return
+
+    const observer = new IntersectionObserver((entries) => {
+      const visibleItems = entries.filter((entry) => entry.isIntersecting)
+      if (!visibleItems.length) return
+
+      const activeEntry = visibleItems.reduce((closest, entry) => (
+        Math.abs(entry.boundingClientRect.top + entry.boundingClientRect.height / 2 - window.innerHeight / 2)
+        < Math.abs(closest.boundingClientRect.top + closest.boundingClientRect.height / 2 - window.innerHeight / 2)
+          ? entry
+          : closest
+      ))
+      const index = Number((activeEntry.target as HTMLElement).dataset.roomIndex)
+      if (Number.isInteger(index)) setActiveRoom(index)
+    }, { rootMargin: '-38% 0px -38% 0px', threshold: 0 })
+
+    roomItems.current.forEach((item) => item && observer.observe(item))
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <>
+    <div className="homepage">
       <section className="home-hero" aria-labelledby="home-title">
+        <div className="home-hero__visual">
+          <IllustrativeImageSlot
+            title="Hotel reception"
+            variant="lobby"
+            src={heroImage}
+            alt="Illustrative concept of a hotel reception with warm wood walls, a stone counter and pendant lights; not an actual hotel photograph."
+            priority
+            showCaption={false}
+          />
+        </div>
         <ContentContainer className="home-hero__grid">
           <div className="home-hero__copy">
-            <div className="home-hero__stars" aria-hidden="true">★★★★★</div>
-            <h1 id="home-title">OBA'S REST HOTEL</h1>
-            <p className="home-hero__description">
-              A calm, welcoming stay in Benin City.
-            </p>
+            <p className="home-hero__location">Airport Road <span aria-hidden="true">·</span> Benin City</p>
+            <h1 id="home-title">OBA’S REST HOTEL</h1>
+            <p className="home-hero__description">A calm, welcoming stay in Benin City.</p>
             <div className="home-hero__actions">
-              <Link className="home-hero__explore" to="#home-rooms">EXPLORE <span aria-hidden="true">→</span></Link>
+              <EnquiryLink>Request a booking</EnquiryLink>
+              <Link className="home-hero__explore" to="#home-rooms">Explore rooms <span aria-hidden="true">↓</span></Link>
             </div>
-            <p className="booking-note">Reception checks availability and confirms every booking.</p>
+            <p className="home-hero__assurance">Reception checks availability and confirms every booking.</p>
           </div>
-          <div className="home-hero__visual">
-            <IllustrativeImageSlot title="Hotel reception" variant="lobby" src={heroImage} alt="Illustrative concept of a hotel reception with warm wood walls, a stone counter and pendant lights; not an actual hotel photograph." priority showCaption={false} />
+          <a className="home-hero__scroll" href="#home-welcome" aria-label="Scroll to discover the hotel">
+            <span>Discover Oba’s Rest</span><span aria-hidden="true">↓</span>
+          </a>
+        </ContentContainer>
+      </section>
+
+      <section id="home-welcome" className="home-welcome">
+        <ContentContainer className="home-welcome__layout" data-home-reveal>
+          <p className="home-welcome__index">01 <span>—</span> A warm welcome</p>
+          <h2>A calm place to settle into Benin City.</h2>
+          <div className="home-welcome__copy">
+            <p>At Oba’s Rest Hotel, begin with the room category that suits your plans. Reception can help with the details of your stay.</p>
+            <Link className="home-welcome__link" to="/amenities">What to know before you arrive <span aria-hidden="true">↗</span></Link>
           </div>
         </ContentContainer>
       </section>
 
-      <section className="home-introduction section-space" aria-labelledby="home-introduction-title">
-        <ContentContainer className="home-introduction__grid">
-          <div className="home-introduction__marker">
-            <span>01</span>
-            <span>WELCOME</span>
-          </div>
-          <div className="home-introduction__copy">
-            <p className="eyebrow">A place to begin</p>
-            <h2 id="home-introduction-title">Welcome to Oba’s Rest Hotel.</h2>
-            <p>Find the room category that suits your plans, learn about confirmed facilities, and contact reception for the details of your stay.</p>
-            <Link className="text-link" to="/contact">Find us on Airport Road <span aria-hidden="true">↗</span></Link>
-          </div>
-          <aside className="home-introduction__aside">
-            <span className="home-introduction__aside-label">A helpful note</span>
-            <p>Room details, rates and availability are confirmed by reception for your dates.</p>
-          </aside>
-        </ContentContainer>
-      </section>
-
-      <section id="home-rooms" className="home-rooms section-space" aria-labelledby="home-rooms-title">
+      <section id="home-rooms" className="home-rooms" aria-labelledby="home-rooms-title">
         <ContentContainer>
-          <div className="home-rooms__heading">
-            <SectionHeading eyebrow="Rooms & Suites" title="A room for your plans." description="Explore the four room categories, then contact reception for the details that apply to your stay." />
-            <Link className="text-link" to="/rooms">View all rooms <span aria-hidden="true">↗</span></Link>
+          <div className="home-rooms__heading" data-home-reveal>
+            <div>
+              <p className="home-rooms__eyebrow">02 <span>—</span> Rooms & suites</p>
+              <h2 id="home-rooms-title">Find the room category for your stay.</h2>
+            </div>
+            <p>Room images are illustrative concepts, not photographs of Oba’s Rest Hotel. Reception can confirm category details and rates for your dates.</p>
           </div>
-          <div className="home-room-grid">
-            {roomTypes.map((room) => (
-              <Link className={`home-room-card home-room-card--${room.variant}`} key={room.name} to="/rooms" aria-label={`Explore ${room.name}${room.detail ? `, ${room.detail}` : ''}`}>
-                <IllustrativeImageSlot title={room.name} variant={room.variant} src={room.image} alt={room.alt} objectPosition={room.objectPosition} compact />
-                <div className="home-room-card__caption">
-                  <span className="home-room-card__index">{room.index}</span>
-                  <div><h3>{room.name}</h3>{room.detail && <p>{room.detail}</p>}</div>
-                  <span className="home-room-card__arrow" aria-hidden="true">↗</span>
-                </div>
-              </Link>
-            ))}
+
+          <div className="home-rooms__story">
+            <figure className="home-rooms__visual" aria-hidden="true">
+              <div className="home-rooms__image-stack">
+                {roomTypes.map((room, index) => (
+                  <img
+                    key={room.name}
+                    className={`home-rooms__image${activeRoom === index ? ' is-active' : ''}`}
+                    src={room.image}
+                    alt=""
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                ))}
+              </div>
+              <figcaption><span>Illustrative concepts · Not hotel photographs</span><span>0{activeRoom + 1} / 04</span></figcaption>
+            </figure>
+
+            <ol className="home-room-list">
+              {roomTypes.map((room, index) => (
+                <li
+                  className={`home-room-list__item${activeRoom === index ? ' is-active' : ''}`}
+                  key={room.name}
+                  data-room-index={index}
+                  ref={(element) => { roomItems.current[index] = element }}
+                  data-home-reveal
+                  onMouseEnter={() => setActiveRoom(index)}
+                  onFocus={() => setActiveRoom(index)}
+                >
+                  <span className="home-room-list__number">0{index + 1}</span>
+                  <Link to="/rooms" aria-label={`Explore ${room.name}${room.detail ? `, ${room.detail}` : ''}`}>
+                    <span className="home-room-list__name">{room.name}</span>
+                    {room.detail && <span className="home-room-list__detail">{room.detail}</span>}
+                    <span className="home-room-list__action">Explore category <span aria-hidden="true">↗</span></span>
+                  </Link>
+                  <img className="home-room-list__thumbnail" src={room.image} alt="" loading="lazy" decoding="async" />
+                </li>
+              ))}
+            </ol>
+          </div>
+          <Link className="home-rooms__all-link" to="/rooms">View rooms & suites <span aria-hidden="true">↗</span></Link>
+        </ContentContainer>
+      </section>
+
+      <section className="home-essentials" aria-labelledby="home-essentials-title">
+        <ContentContainer className="home-essentials__layout">
+          <div className="home-essentials__intro" data-home-reveal>
+            <p className="home-essentials__eyebrow">03 <span>—</span> Confirmed at the hotel</p>
+            <h2 id="home-essentials-title">The essentials for a more settled stay.</h2>
+            <Link to="/amenities">See guest information <span aria-hidden="true">↗</span></Link>
+          </div>
+          <div className="home-essentials__facts">
+            <div className="home-essential" data-home-reveal>
+              <CountUpNumber value={24} className="home-essential__number" accessibleText="24 hours of power" suffix="" />
+              <div><h3>Hour power</h3><p>Electricity is available throughout the day and night.</p></div>
+            </div>
+            <div className="home-essential" data-home-reveal>
+              <span className="home-essential__number">02</span>
+              <div><h3>Parking for every room</h3><p>Parking is available for every room.</p></div>
+            </div>
           </div>
         </ContentContainer>
       </section>
 
-      <section className="home-facilities" aria-labelledby="home-facilities-title">
-        <ContentContainer className="home-facilities__inner">
-          <div className="home-facilities__intro">
-            <p className="eyebrow">Confirmed at the hotel</p>
-            <h2 id="home-facilities-title">The essentials, clearly.</h2>
-            <Link className="text-link text-link--light" to="/amenities">Amenities & guest information <span aria-hidden="true">↗</span></Link>
+      <section className="home-contact" aria-labelledby="home-contact-title">
+        <ContentContainer className="home-contact__layout">
+          <div className="home-contact__location" data-home-reveal>
+            <p className="home-contact__eyebrow">04 <span>—</span> Find us</p>
+            <address>Airport Road<br />Benin City, Edo State<br />Nigeria</address>
+            <Link to="/contact">Location & contact details <span aria-hidden="true">↗</span></Link>
           </div>
-          <div className="home-facility"><span className="home-facility__index">01</span><div><h3>24-hour power</h3><p>Power is available throughout the day and night.</p></div></div>
-          <div className="home-facility"><span className="home-facility__index">02</span><div><h3>Parking for every room</h3><p>Parking is available for every room.</p></div></div>
-        </ContentContainer>
-      </section>
-
-      <section className="home-guest section-space">
-        <ContentContainer className="home-guest__grid">
-          <SectionHeading eyebrow="Before you arrive" title="Know what to check before you arrive." description="Arrival and departure arrangements depend on your lodging arrangement. Reception can confirm the details for your visit." />
-          <div className="home-guest__aside">
-            <p>Questions about arrival, departure or house rules? The reception team can help clarify them.</p>
-            <Link className="text-link" to="/amenities">Read guest information <span aria-hidden="true">↗</span></Link>
+          <div className="home-contact__invitation" data-home-reveal>
+            <p className="home-contact__eyebrow">Your stay starts with a conversation</p>
+            <h2 id="home-contact-title">Speak with reception.</h2>
+            <p>Ask about room categories, rates, availability or arrangements for your visit. Reception checks availability and confirms every booking.</p>
+            <div className="home-contact__actions">
+              <EnquiryLink>Make an enquiry</EnquiryLink>
+              <a href="tel:08163186622">Call reception <span aria-hidden="true">↗</span></a>
+              <a href="https://wa.me/2348163186622" aria-label="Open WhatsApp chat with reception">WhatsApp <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </ContentContainer>
       </section>
-
-      <section className="booking-strip" aria-labelledby="home-contact-title">
-        <ContentContainer className="booking-strip__inner">
-          <div><p className="eyebrow">Your stay starts with a conversation</p><h2 id="home-contact-title">Let’s talk about your visit.</h2><p>Send an enquiry to reception. Every booking is checked and confirmed by the team.</p></div>
-          <EnquiryLink>Make an enquiry</EnquiryLink>
-        </ContentContainer>
-      </section>
-    </>
+    </div>
   )
 }
