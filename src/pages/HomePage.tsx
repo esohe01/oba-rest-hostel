@@ -20,26 +20,42 @@ const roomTypes = [
 export function HomePage() {
   const [activeRoom, setActiveRoom] = useState(0)
   const roomItems = useRef<Array<HTMLLIElement | null>>([])
+  const roomSection = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    if (!('IntersectionObserver' in window)) return
+    let frame = 0
+    const updateActiveRoom = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const section = roomSection.current
+        if (!section) return
+        const sectionBounds = section.getBoundingClientRect()
+        if (sectionBounds.bottom <= 0 || sectionBounds.top >= window.innerHeight) return
 
-    const observer = new IntersectionObserver((entries) => {
-      const visibleItems = entries.filter((entry) => entry.isIntersecting)
-      if (!visibleItems.length) return
+        const focusLine = window.innerHeight * 0.5
+        let closestIndex = activeRoom
+        let closestDistance = Number.POSITIVE_INFINITY
+        roomItems.current.forEach((item, index) => {
+          if (!item) return
+          const bounds = item.getBoundingClientRect()
+          const distance = Math.abs(bounds.top + bounds.height / 2 - focusLine)
+          if (distance < closestDistance) {
+            closestDistance = distance
+            closestIndex = index
+          }
+        })
+        setActiveRoom((current) => current === closestIndex ? current : closestIndex)
+      })
+    }
 
-      const activeEntry = visibleItems.reduce((closest, entry) => (
-        Math.abs(entry.boundingClientRect.top + entry.boundingClientRect.height / 2 - window.innerHeight / 2)
-        < Math.abs(closest.boundingClientRect.top + closest.boundingClientRect.height / 2 - window.innerHeight / 2)
-          ? entry
-          : closest
-      ))
-      const index = Number((activeEntry.target as HTMLElement).dataset.roomIndex)
-      if (Number.isInteger(index)) setActiveRoom(index)
-    }, { rootMargin: '-38% 0px -38% 0px', threshold: 0 })
-
-    roomItems.current.forEach((item) => item && observer.observe(item))
-    return () => observer.disconnect()
+    updateActiveRoom()
+    window.addEventListener('scroll', updateActiveRoom, { passive: true })
+    window.addEventListener('resize', updateActiveRoom)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', updateActiveRoom)
+      window.removeEventListener('resize', updateActiveRoom)
+    }
   }, [])
 
   return (
@@ -83,7 +99,7 @@ export function HomePage() {
         </ContentContainer>
       </section>
 
-      <section id="home-rooms" className="home-rooms" aria-labelledby="home-rooms-title">
+      <section id="home-rooms" className="home-rooms" aria-labelledby="home-rooms-title" ref={roomSection}>
         <ContentContainer>
           <div className="home-rooms__heading">
             <div>
@@ -119,7 +135,6 @@ export function HomePage() {
                   ref={(element) => { roomItems.current[index] = element }}
                   data-home-reveal="room"
                   data-home-reveal-index={index}
-                  onMouseEnter={() => setActiveRoom(index)}
                   onFocus={() => setActiveRoom(index)}
                 >
                   <span className="home-room-list__number">0{index + 1}</span>
