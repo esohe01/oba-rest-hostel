@@ -184,7 +184,7 @@ export function HomePage() {
             <h2 id="home-contact-title" data-home-reveal="headline">Speak with reception.</h2>
             <p data-home-reveal="copy">Ask about room categories, rates, availability or arrangements for your visit. Reception checks availability and confirms every booking.</p>
             <div className="home-contact__actions" data-home-reveal="copy">
-              <EnquiryLink>Make an enquiry</EnquiryLink>
+              <EnquiryLink openChat>Make an enquiry</EnquiryLink>
               <a href="tel:08163186622">Call reception <span aria-hidden="true">↗</span></a>
               <a href="https://wa.me/2348163186622" aria-label="Open WhatsApp chat with reception">WhatsApp <span aria-hidden="true">↗</span></a>
             </div>

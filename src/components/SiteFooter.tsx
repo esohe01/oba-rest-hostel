@@ -9,7 +9,7 @@ export function SiteFooter() {
         <p>Airport Road, Benin City, Edo State, Nigeria</p>
         <a className="site-footer__phone" href="tel:08163186622">Contact reception · 08163186622</a>
         <p className="site-footer__note">Reception confirms every booking.</p>
-        <EnquiryLink appearance="quiet" className="site-footer__enquiry">Make an enquiry</EnquiryLink>
+        <EnquiryLink appearance="quiet" className="site-footer__enquiry" openChat>Make an enquiry</EnquiryLink>
         <span className="site-footer__copyright">© {new Date().getFullYear()} Oba’s Rest Hotel</span>
       </div>
     </footer>
