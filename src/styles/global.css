@@ -480,6 +480,10 @@ button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3
 /* Keep the Botpress launcher above a mobile booking bar and clear of the device safe area. */
 .bpFab { z-index: 30 !important; }
 .bpWebchat { z-index: 29 !important; }
+@media (max-width: 759px) {
+  .bpFabContainer { width: 3.25rem !important; height: 3.25rem !important; }
+  .bpFabIcon { width: 1.35rem !important; height: 1.35rem !important; }
+}
 .chat-toggle { display: inline-flex; min-height: 3.25rem; align-items: center; gap: .65rem; border: 0; border-radius: 999px; background: var(--color-navy); padding: .65rem 1rem; box-shadow: 0 8px 28px rgb(0 0 0 / 20%); color: white; cursor: pointer; }
 .chat-toggle:hover { background: #263e53; }
 .chat-toggle__icon { display: grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: #ead9ba; color: var(--color-navy); font-size: .8rem; font-weight: 700; }

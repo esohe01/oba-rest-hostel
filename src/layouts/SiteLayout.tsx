@@ -24,9 +24,15 @@ export function SiteLayout() {
       })
     }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' })
 
+    const delayForRole: Record<string, number> = { eyebrow: 0, headline: 65, copy: 180, image: 0, room: 0 }
     targets.forEach((target, index) => {
       target.classList.add('scroll-reveal')
-      if (isHome) target.style.setProperty('--home-reveal-delay', `${(index % 4) * 75}ms`)
+      if (isHome) {
+        const role = target.dataset.homeReveal ?? 'copy'
+        const itemIndex = Number(target.dataset.homeRevealIndex ?? 0)
+        const delay = role === 'room' ? itemIndex * 85 : delayForRole[role] ?? (index % 4) * 70
+        target.style.setProperty('--home-reveal-delay', `${delay}ms`)
+      }
       observer.observe(target)
     })
 

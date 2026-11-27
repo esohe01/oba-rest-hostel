@@ -214,7 +214,7 @@
 /* Welcome: a quiet typographic pause, not another image-and-copy card. */
 .homepage .home-welcome {
   background: var(--home-cream);
-  padding-block: var(--home-section-space);
+  padding-block: clamp(4rem, 7vw, 6.5rem) var(--home-section-space);
 }
 
 .homepage .home-welcome__layout {
@@ -327,6 +327,10 @@
 /* Motion is limited to content entering view and the room-image crossfade. */
 .homepage .scroll-reveal { opacity: 0; transform: translateY(1.4rem); transition: opacity 650ms var(--home-motion), transform 650ms var(--home-motion); transition-delay: var(--home-reveal-delay, 0ms); }
 .homepage .scroll-reveal.is-revealed { opacity: 1; transform: none; }
+.homepage [data-home-reveal="headline"].scroll-reveal { clip-path: inset(0 0 100% 0); transform: translateY(.45em); transition: clip-path 760ms var(--home-motion), opacity 650ms var(--home-motion), transform 760ms var(--home-motion); transition-delay: var(--home-reveal-delay, 0ms); }
+.homepage [data-home-reveal="headline"].scroll-reveal.is-revealed { clip-path: inset(0); transform: none; }
+.homepage [data-home-reveal="image"].scroll-reveal { clip-path: inset(0 0 12% 0); opacity: 1; transform: scale(1.025); transition: clip-path 900ms var(--home-motion), transform 1100ms var(--home-motion); transition-delay: var(--home-reveal-delay, 0ms); }
+.homepage [data-home-reveal="image"].scroll-reveal.is-revealed { clip-path: inset(0); transform: scale(1); }
 
 @media (max-width: 900px) {
   .homepage .home-welcome__layout { grid-template-columns: .5fr 1.3fr; gap: 2rem; }
@@ -350,7 +354,7 @@
   .homepage .home-hero__description { max-width: 27rem; margin-top: 1.2rem; font-size: .98rem; }
   .homepage .home-hero__actions { gap: .85rem 1.25rem; margin-top: 2rem; }
   .homepage .home-hero__assurance { max-width: 21rem; margin-top: 1.35rem; font-size: .75rem; }
-  .homepage .home-hero__scroll { right: 0; bottom: 1.65rem; font-size: .72rem; }
+  .homepage .home-hero__scroll { right: auto; bottom: 1.65rem; left: 0; font-size: .72rem; }
 
   .homepage .home-welcome__layout { grid-template-columns: 1fr; gap: 1.6rem; }
   .homepage .home-welcome__index { margin: 0; }
@@ -394,5 +398,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .homepage .scroll-reveal { opacity: 1; transform: none; transition: none; }
+  .homepage [data-home-reveal="headline"].scroll-reveal { clip-path: none; }
+  .homepage [data-home-reveal="image"].scroll-reveal { clip-path: none; }
   .homepage .home-rooms__image { transition: none; transform: none; }
 }

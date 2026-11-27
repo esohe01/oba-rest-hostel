@@ -73,10 +73,10 @@ export function HomePage() {
       </section>
 
       <section id="home-welcome" className="home-welcome">
-        <ContentContainer className="home-welcome__layout" data-home-reveal>
-          <p className="home-welcome__index">01 <span>—</span> A warm welcome</p>
-          <h2>A calm place to settle into Benin City.</h2>
-          <div className="home-welcome__copy">
+        <ContentContainer className="home-welcome__layout">
+          <p className="home-welcome__index" data-home-reveal="eyebrow">01 <span>—</span> A warm welcome</p>
+          <h2 data-home-reveal="headline">A calm place to settle into Benin City.</h2>
+          <div className="home-welcome__copy" data-home-reveal="copy">
             <p>At Oba’s Rest Hotel, begin with the room category that suits your plans. Reception can help with the details of your stay.</p>
             <Link className="home-welcome__link" to="/amenities">What to know before you arrive <span aria-hidden="true">↗</span></Link>
           </div>
@@ -85,16 +85,16 @@ export function HomePage() {
 
       <section id="home-rooms" className="home-rooms" aria-labelledby="home-rooms-title">
         <ContentContainer>
-          <div className="home-rooms__heading" data-home-reveal>
+          <div className="home-rooms__heading">
             <div>
-              <p className="home-rooms__eyebrow">02 <span>—</span> Rooms & suites</p>
-              <h2 id="home-rooms-title">Find the room category for your stay.</h2>
+              <p className="home-rooms__eyebrow" data-home-reveal="eyebrow">02 <span>—</span> Rooms & suites</p>
+              <h2 id="home-rooms-title" data-home-reveal="headline">Find the room category for your stay.</h2>
             </div>
-            <p>Room images are illustrative concepts, not photographs of Oba’s Rest Hotel. Reception can confirm category details and rates for your dates.</p>
+            <p data-home-reveal="copy">Room images are illustrative concepts, not photographs of Oba’s Rest Hotel. Reception can confirm category details and rates for your dates.</p>
           </div>
 
           <div className="home-rooms__story">
-            <figure className="home-rooms__visual" aria-hidden="true">
+            <figure className="home-rooms__visual" aria-hidden="true" data-home-reveal="image">
               <div className="home-rooms__image-stack">
                 {roomTypes.map((room, index) => (
                   <img
@@ -117,7 +117,8 @@ export function HomePage() {
                   key={room.name}
                   data-room-index={index}
                   ref={(element) => { roomItems.current[index] = element }}
-                  data-home-reveal
+                  data-home-reveal="room"
+                  data-home-reveal-index={index}
                   onMouseEnter={() => setActiveRoom(index)}
                   onFocus={() => setActiveRoom(index)}
                 >
@@ -138,17 +139,17 @@ export function HomePage() {
 
       <section className="home-essentials" aria-labelledby="home-essentials-title">
         <ContentContainer className="home-essentials__layout">
-          <div className="home-essentials__intro" data-home-reveal>
-            <p className="home-essentials__eyebrow">03 <span>—</span> Confirmed at the hotel</p>
-            <h2 id="home-essentials-title">The essentials for a more settled stay.</h2>
-            <Link to="/amenities">See guest information <span aria-hidden="true">↗</span></Link>
+          <div className="home-essentials__intro">
+            <p className="home-essentials__eyebrow" data-home-reveal="eyebrow">03 <span>—</span> Confirmed at the hotel</p>
+            <h2 id="home-essentials-title" data-home-reveal="headline">The essentials for a more settled stay.</h2>
+            <Link data-home-reveal="copy" to="/amenities">See guest information <span aria-hidden="true">↗</span></Link>
           </div>
           <div className="home-essentials__facts">
-            <div className="home-essential" data-home-reveal>
+            <div className="home-essential" data-home-reveal="room" data-home-reveal-index="0">
               <CountUpNumber value={24} className="home-essential__number" accessibleText="24 hours of power" suffix="" />
               <div><h3>Hour power</h3><p>Electricity is available throughout the day and night.</p></div>
             </div>
-            <div className="home-essential" data-home-reveal>
+            <div className="home-essential" data-home-reveal="room" data-home-reveal-index="1">
               <span className="home-essential__number">02</span>
               <div><h3>Parking for every room</h3><p>Parking is available for every room.</p></div>
             </div>
@@ -158,16 +159,16 @@ export function HomePage() {
 
       <section className="home-contact" aria-labelledby="home-contact-title">
         <ContentContainer className="home-contact__layout">
-          <div className="home-contact__location" data-home-reveal>
-            <p className="home-contact__eyebrow">04 <span>—</span> Find us</p>
-            <address>Airport Road<br />Benin City, Edo State<br />Nigeria</address>
-            <Link to="/contact">Location & contact details <span aria-hidden="true">↗</span></Link>
+          <div className="home-contact__location">
+            <p className="home-contact__eyebrow" data-home-reveal="eyebrow">04 <span>—</span> Find us</p>
+            <address data-home-reveal="headline">Airport Road<br />Benin City, Edo State<br />Nigeria</address>
+            <Link data-home-reveal="copy" to="/contact">Location & contact details <span aria-hidden="true">↗</span></Link>
           </div>
-          <div className="home-contact__invitation" data-home-reveal>
-            <p className="home-contact__eyebrow">Your stay starts with a conversation</p>
-            <h2 id="home-contact-title">Speak with reception.</h2>
-            <p>Ask about room categories, rates, availability or arrangements for your visit. Reception checks availability and confirms every booking.</p>
-            <div className="home-contact__actions">
+          <div className="home-contact__invitation">
+            <p className="home-contact__eyebrow" data-home-reveal="eyebrow">Your stay starts with a conversation</p>
+            <h2 id="home-contact-title" data-home-reveal="headline">Speak with reception.</h2>
+            <p data-home-reveal="copy">Ask about room categories, rates, availability or arrangements for your visit. Reception checks availability and confirms every booking.</p>
+            <div className="home-contact__actions" data-home-reveal="copy">
               <EnquiryLink>Make an enquiry</EnquiryLink>
               <a href="tel:08163186622">Call reception <span aria-hidden="true">↗</span></a>
               <a href="https://wa.me/2348163186622" aria-label="Open WhatsApp chat with reception">WhatsApp <span aria-hidden="true">↗</span></a>
